@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         error: (err) => {
           console.error('Login failed', err);
           this.messageService.add({
-            severity: 'failed',
+            severity: 'error',
             summary: 'Failed',
             detail: 'login Failed',
           });
