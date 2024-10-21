@@ -75,4 +75,20 @@ export class RemoteComponentService {
 
     return componentRef;
   }
+
+  async loadHeaderComponent(viewContainerRef: ViewContainerRef) {
+    const { HeaderComponent } = await loadRemoteModule({
+      remoteEntry: 'http://localhost:4400/remoteEntry.js',
+      remoteName: 'appHeader',
+      exposedModule: './HeaderComponent',
+    });
+
+    const componentRef = viewContainerRef.createComponent(HeaderComponent, {
+      injector: this.injector,
+    });
+
+    const instance = componentRef.instance as any;
+
+    return componentRef;
+  }
 }
