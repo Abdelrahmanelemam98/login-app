@@ -37,6 +37,7 @@ module.exports = {
       // For hosts (please adjust)
       remotes: {
         mfe1: "productApp@http://localhost:3000/remoteEntry.js",
+        mfe2: "appHeader@http://localhost:3000/remoteEntry.js",
       },
 
       shared: share({
