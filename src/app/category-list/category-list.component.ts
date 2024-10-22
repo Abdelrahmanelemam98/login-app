@@ -26,7 +26,7 @@ export class CategoryListComponent implements AfterViewInit {
       this.remoteComponentService.loadCategoryListComponent(
         this.viewContainerRef
       );
-
+    console.log('from category');
     const instance = componentRef.instance as any;
     if (instance.outputEvent) {
       instance.outputEvent.subscribe((eventData: any) => {

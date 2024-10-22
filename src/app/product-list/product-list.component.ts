@@ -7,11 +7,12 @@ import {
 import { RemoteComponentService } from '../service/remote-component.service';
 import { CommonModule } from '@angular/common';
 import { CategoryListComponent } from '../category-list/category-list.component';
+import { CardComponent } from '../card/card.component';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, CategoryListComponent],
+  imports: [CommonModule, CategoryListComponent, CardComponent],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
 })
@@ -30,7 +31,7 @@ export class ProductListComponent implements AfterViewInit {
 
     this.asd = componentRef.instance as any;
 
-    console.log('Loaded component instance:', this.asd);
+    console.log('Loaded component instance: product', this.asd);
 
     if (this.asd && this.asd.someData) {
       console.log('Specific data from instance:', this.asd.someData);

@@ -40,21 +40,21 @@ export const routes: Routes = [
     },
   },
 
-  // {
-  //   path: 'category',
-  //   loadComponent: () => {
-  //     return loadRemoteModule({
-  //       remoteEntry: 'http://localhost:4200/remoteEntry.js',
-  //       remoteName: 'productApp',
-  //       exposedModule: './CategoryListComponent',
-  //     })
-  //       .then((m) => m.CategoryListComponent)
-  //       .catch((err) => {
-  //         console.error('Error loading remote component:', err);
-  //         throw err;
-  //       });
-  //   },
-  // },
+  {
+    path: 'card',
+    loadComponent: () => {
+      return loadRemoteModule({
+        remoteEntry: 'http://localhost:4400/remoteEntry.js',
+        remoteName: 'appHeader',
+        exposedModule: './CardComponent',
+      })
+        .then((m) => m.CardComponent)
+        .catch((err) => {
+          console.error('Error loading remote component:', err);
+          throw err;
+        });
+    },
+  },
 
   { path: 'product', component: ProductListComponent },
   { path: 'category', component: CategoryListComponent },
