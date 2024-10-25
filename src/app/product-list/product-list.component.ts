@@ -19,33 +19,30 @@ export class ProductListComponent implements AfterViewInit {
   @ViewChild('dynamicComponent', { read: ViewContainerRef, static: true })
   viewContainerRef!: ViewContainerRef;
 
-  asd: any;
   constructor(private remoteComponentService: RemoteComponentService) {}
 
-  async ngAfterViewInit(): Promise<void> {
-    const componentRef =
-      await this.remoteComponentService.loadProductListComponent(
-        this.viewContainerRef
+  ngAfterViewInit(): void {
+    // Subscribe to the observable to load the product list component
+    this.remoteComponentService
+      .loadProductListComponent(this.viewContainerRef)
+      .subscribe(
+        (componentRef: any) => {
+          const instance = componentRef.instance as any;
+          console.log('Loaded component instance:', instance);
+
+          if (instance.someData) {
+            console.log('Specific data from instance:', instance.someData);
+          }
+
+          if (instance?.outputEvent) {
+            instance.outputEvent.subscribe((eventData: any) => {
+              console.log('Product List Event emitted:', eventData);
+            });
+          }
+        },
+        (error) => {
+          console.error('Error loading component:', error);
+        }
       );
-
-    this.asd = componentRef.instance as any;
-
-    console.log('Loaded component instance:', this.asd);
-
-    if (this.asd && this.asd.someData) {
-      console.log('Specific data from instance:', this.asd.someData);
-    }
-
-    if (this.asd?.outputEvent) {
-      this.asd.outputEvent.subscribe((eventData: any) => {
-        console.log('Product List Event emitted:', eventData);
-      });
-    }
-  }
-
-  ngOnInit() {
-    setTimeout(() => {
-      this.asd.outputEv.set('ahmed');
-    }, 5000);
   }
 }
