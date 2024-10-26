@@ -38,8 +38,8 @@ module.exports = {
       // For hosts (please adjust)
       remotes: {
         productApp: "productApp@http://localhost:4200/remoteEntry.js",
-        // mfe2: "appHeader@http://localhost:4400/remoteEntry.js",
         categoryApp: "categoryApp@http://localhost:4500/remoteEntry.js",
+        appHeader: "appHeader@http://localhost:4400//remoteEntry.js",
       },
 
       shared: share({
