@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -14,24 +15,31 @@ import { CommonModule } from '@angular/common';
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss'],
 })
-export class CategoryListComponent implements AfterViewInit {
+export class CategoryListComponent implements AfterViewInit, OnInit {
   @ViewChild('dynamicComponent', { read: ViewContainerRef, static: true })
   viewContainerRef!: ViewContainerRef;
 
   constructor(private remoteComponentService: RemoteComponentService) {}
-  ngAfterViewInit(): void {}
+  ngOnInit(): void {
+    this.remoteComponentService
+      .loadCategoryListComponent(this.viewContainerRef)
+      .subscribe(
+        (componentRef: any) => {
+          const instance = componentRef.instance as any;
 
-  ngOnInit() {
-    const componentRef: any =
-      this.remoteComponentService.loadCategoryListComponent(
-        this.viewContainerRef
+          if (instance.outputEvent) {
+            instance.outputEvent.subscribe((eventData: any) => {
+              console.log('Category List Event emitted:', eventData);
+            });
+          }
+        },
+        (error) => {
+          console.error('Error loading remote component:', error);
+        }
       );
-    console.log('from category');
-    const instance = componentRef.instance as any;
-    if (instance.outputEvent) {
-      instance.outputEvent.subscribe((eventData: any) => {
-        console.log('Category List Event emitted:', eventData);
-      });
-    }
+  }
+
+  ngAfterViewInit(): void {
+    // Subscribe to the observable to load the category list component
   }
 }

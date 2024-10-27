@@ -2,6 +2,7 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const mf = require("@angular-architects/module-federation/webpack");
 const path = require("path");
 const share = mf.share;
+const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
 
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(path.join(__dirname, "tsconfig.json"), [
@@ -27,18 +28,13 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      // For remotes (please adjust)
+      library: { type: "module" },
       name: "loginApp",
-      // filename: "remoteEntry.js",
-      // exposes: {
-      //     './Component': './/src/app/app.component.ts',
-      // },
-
-      // For hosts (please adjust)
       remotes: {
-        mfe1: "productApp@http://localhost:3000/remoteEntry.js",
+        productApp: "productApp@http://localhost:4200/remoteEntry.js",
+        categoryApp: "categoryApp@http://localhost:4500/remoteEntry.js",
+        appHeader: "appHeader@http://localhost:4400/remoteEntry.js",
       },
-
       shared: share({
         "@angular/core": {
           singleton: true,
@@ -60,10 +56,10 @@ module.exports = {
           strictVersion: true,
           requiredVersion: "auto",
         },
-
         ...sharedMappings.getDescriptors(),
       }),
     }),
+    new ExternalTemplateRemotesPlugin(),
     sharedMappings.getPlugin(),
   ],
 };

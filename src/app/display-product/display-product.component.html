@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      @defer{
+      <app-category-list></app-category-list>
+      }@placeholder (minimum 500ms){
+      <p>Load Category Component</p>
+      } @defer{
+      <app-card></app-card>
+
+      }@placeholder(minimum 500ms){
+      <p>Load Card Component</p>
+      }
+    </div>
+    <div class="col-md-8">
+      @defer{
+      <app-product-list></app-product-list>
+      }@placeholder(minimum 500ms){
+      <p>Load Product Component</p>
+      }
+    </div>
+  </div>
+</div>

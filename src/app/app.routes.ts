@@ -4,6 +4,7 @@ import { loadRemoteModule } from '@angular-architects/module-federation';
 import { authGuard } from './guard/guards/auth.guard';
 import { ProductListComponent } from './product-list/product-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { DisplayProductComponent } from './display-product/display-product.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
@@ -56,6 +57,10 @@ export const routes: Routes = [
     },
   },
 
-  { path: 'product', component: ProductListComponent },
-  { path: 'category', component: CategoryListComponent },
+  // { path: 'product', component: ProductListComponent },
+  // { path: 'category', component: CategoryListComponent },
+  {
+    path: 'product',
+    component: DisplayProductComponent,
+  },
 ];

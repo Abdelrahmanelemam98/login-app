@@ -13,26 +13,21 @@ export class HeaderComponent {
   @ViewChild('dynamicComponent', { read: ViewContainerRef, static: true })
   viewContainerRef!: ViewContainerRef;
 
-  asd: any;
   constructor(private remoteComponentService: RemoteComponentService) {}
 
-  // async ngAfterViewInit(): Promise<void> {
-  //   const componentRef = await this.remoteComponentService.loadHeaderComponent(
+  ngOnInit(): void {
+    // this.loadHeaderComponent();
+  }
+
+  // async loadHeaderComponent() {
+  //   await this.remoteComponentService.loadHeaderComponent(
   //     this.viewContainerRef
   //   );
+  // }
 
-  //   this.asd = componentRef.instance as any;
-
-  //   console.log('Loaded component instance:', this.asd);
-
-  //   if (this.asd && this.asd.someData) {
-  //     console.log('Specific data from instance:', this.asd.someData);
-  //   }
-
-  //   if (this.asd?.outputEvent) {
-  //     this.asd.outputEvent.subscribe((eventData: any) => {
-  //       console.log('header emitted:', eventData);
-  //     });
-  //   }
+  // Handle the data received from the header component
+  // handleData(data: any) {
+  //   // Process the received data as needed
+  //   console.log('Received data from header:', data);
   // }
 }

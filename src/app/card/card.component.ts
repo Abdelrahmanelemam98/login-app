@@ -12,35 +12,29 @@ export class CardComponent {
   @ViewChild('dynamicComponent', { read: ViewContainerRef, static: true })
   viewContainerRef!: ViewContainerRef;
 
-  asd: any;
   constructor(private remoteComponentService: RemoteComponentService) {}
 
-  async ngAfterViewInit(): Promise<void> {
-    // const componentRef = await this.remoteComponentService.loadCardComponent(
-    //   this.viewContainerRef
-    // );
-    // this.asd = componentRef.instance as any;
-    // console.log('Loaded component instance: card', this.asd);
-    // if (this.asd && this.asd.someData) {
-    //   console.log('Specific data from instance: card', this.asd.someData);
-    // }
-    // if (this.asd?.outputEvent) {
-    //   this.asd.outputEvent.subscribe((eventData: any) => {
-    //     console.log('header emitted:', eventData);
-    //   });
-    // }
-  }
+  ngAfterViewInit(): void {
+    this.remoteComponentService
+      .loadCardComponent(this.viewContainerRef)
+      .subscribe(
+        (componentRef: any) => {
+          const instance = componentRef.instance as any;
+          console.log('Loaded component instance:', instance);
 
-  ngOnInit() {
-    const componentRef: any = this.remoteComponentService.loadCardComponent(
-      this.viewContainerRef
-    );
-    console.log('from Card');
-    const instance = componentRef.instance as any;
-    if (instance.outputEvent) {
-      instance.outputEvent.subscribe((eventData: any) => {
-        console.log('Card List Event emitted: card', eventData);
-      });
-    }
+          if (instance.someData) {
+            console.log('Specific data from instance:', instance.someData);
+          }
+
+          if (instance?.outputEvent) {
+            instance.outputEvent.subscribe((eventData: any) => {
+              console.log('Product List Event emitted:', eventData);
+            });
+          }
+        },
+        (error) => {
+          console.error('Error loading component:', error);
+        }
+      );
   }
 }
